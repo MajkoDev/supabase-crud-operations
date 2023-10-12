@@ -4,9 +4,6 @@ const Form = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  console.log(title);
-  console.log(content);
-
   return (
     <div className="flex flex-col gap-2 items-center ">
       <label htmlFor="">Title</label>
