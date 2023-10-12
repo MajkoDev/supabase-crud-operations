@@ -6,6 +6,7 @@ import { supabase } from "./lib/supabaseClient";
 function App() {
   //TODO: FETCHING DATA from SUPABASE.
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getPosts();
@@ -19,14 +20,16 @@ function App() {
         .select("*")
         .limit(10);
 
-      if (error) throw error;
-      if (data != null) {
-        setPosts(data);
-      }
+      setPosts(data);
     } catch (error) {
       console.log(error.message);
+    } finally {
+      setLoading(false);
     }
   }
+
+  //  console.log(posts[0].title);
+  console.log(posts);
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -37,9 +40,15 @@ function App() {
         <Form />
       </div>
       <div className="container flex flex-wrap justify-center">
-        <Card />
-        <Card />
-        <Card />
+        {loading ? (
+          <>Loading</>
+        ) : (
+          <>
+            {posts.map((post) => (
+              <Card post={post} />
+            ))}
+          </>
+        )}
       </div>
     </div>
   );
