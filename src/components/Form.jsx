@@ -1,8 +1,6 @@
 import React from "react";
 
-const Form = ({ setNewTitle, setNewContent}) => {
-
-
+const Form = ({ setNewTitle, setNewContent }) => {
   return (
     <div className="flex flex-col gap-2 items-center ">
       <label htmlFor="">Title</label>
@@ -25,9 +23,7 @@ const Form = ({ setNewTitle, setNewContent}) => {
         className="border bolder-black p-1 rounded-lg"
         onChange={(e) => setNewContent(e.target.value)}
       />
-      <button
-        className="py-1 px-3 m-1 rounded-lg bg-gray-400 hover:bg-gray-600 text-white"
-      >
+      <button className="py-1 px-3 m-1 rounded-lg bg-gray-400 hover:bg-gray-600 text-white">
         Create
       </button>
     </div>
