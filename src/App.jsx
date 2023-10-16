@@ -28,9 +28,6 @@ function App() {
     }
   }
 
-  //  console.log(posts[0].title);
-  console.log(posts);
-
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="container">
