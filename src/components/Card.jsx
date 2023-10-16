@@ -1,9 +1,41 @@
 import React, { useState } from "react";
+import { supabase } from "../lib/supabaseClient";
 
 const Card = ({ post }) => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useState(post.title);
+  const [content, setContent] = useState(post.content);
   const [editing, setEditing] = useState(false);
+
+  async function updatePost() {
+    try {
+      const { error } = await supabase
+        .from("posts")
+        .update({
+          title: title,
+          content: content,
+        })
+        .eq("id", post.id);
+
+      if (error) throw error;
+      window.location.reload();
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
+  async function deletePost() {
+    try {
+      const { data, error } = await supabase
+        .from("posts")
+        .delete()
+        .eq("id", post.id);
+
+      if (error) throw error;
+      window.location.reload();
+    } catch (error) {
+      alert(error.message);
+    }
+  }
 
   return (
     <div
@@ -28,7 +60,10 @@ const Card = ({ post }) => {
             />
             <div className="flex flex-row gap-2 justify-end">
               <button
-                onClick={() => setEditing(false)}
+                onClick={() => {
+                  setEditing(false);
+                  updatePost();
+                }}
                 className="py-1 px-3 m-1 rounded-lg bg-blue-400 hover:bg-blue-600 text-white"
               >
                 Save
@@ -46,7 +81,10 @@ const Card = ({ post }) => {
               >
                 Edit
               </button>
-              <button className="py-1 px-3 m-1 rounded-lg bg-red-400 hover:bg-red-600 text-white">
+              <button
+                onClick={() => deletePost()}
+                className="py-1 px-3 m-1 rounded-lg bg-red-400 hover:bg-red-600 text-white"
+              >
                 Delete
               </button>
             </div>
